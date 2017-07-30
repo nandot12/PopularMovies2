@@ -127,7 +127,6 @@ public class MostPopularFragment extends Fragment {
 
                     recyclerView.setAdapter(adapter);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(layoutManager);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getActivity(), "Error get json", Toast.LENGTH_SHORT).show();
