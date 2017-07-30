@@ -11,7 +11,7 @@ public class FilmModel implements Parcelable{
 
     public static final String TAG_MOVIES = "movies";
 
-    private String idFilm;
+    private int idFilm;
     private String judulFilm;
     private String gambarFilm;
     private String posterFilm;
@@ -21,6 +21,29 @@ public class FilmModel implements Parcelable{
 
     private boolean favorite = false;
 
+    protected FilmModel(Parcel in) {
+        idFilm = in.readInt();
+        judulFilm = in.readString();
+        gambarFilm = in.readString();
+        posterFilm = in.readString();
+        sinopsisFilm = in.readString();
+        ratingFilm = in.readString();
+        releaseFilm = in.readString();
+        favorite = in.readByte() != 0;
+    }
+
+    public static final Creator<FilmModel> CREATOR = new Creator<FilmModel>() {
+        @Override
+        public FilmModel createFromParcel(Parcel in) {
+            return new FilmModel(in);
+        }
+
+        @Override
+        public FilmModel[] newArray(int size) {
+            return new FilmModel[size];
+        }
+    };
+
     public boolean isFavorite() {
         return favorite;
     }
@@ -29,11 +52,11 @@ public class FilmModel implements Parcelable{
         this.favorite = favorite;
     }
 
-    public String getIdFilm() {
+    public int getIdFilm() {
         return idFilm;
     }
 
-    public void setIdFilm(String idFilm) {
+    public void setIdFilm(int idFilm) {
         this.idFilm = idFilm;
     }
 
@@ -99,7 +122,7 @@ public class FilmModel implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(idFilm);
+        dest.writeInt(idFilm);
         dest.writeString(gambarFilm);
         dest.writeString(sinopsisFilm);
         dest.writeString(releaseFilm);

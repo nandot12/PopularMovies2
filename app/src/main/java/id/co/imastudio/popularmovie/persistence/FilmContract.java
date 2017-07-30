@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  */
 
 public class FilmContract {
-    public static final String AUTHORITY = "com.ivanmagda.popularmovies";
+    public static final String AUTHORITY = "id.co.imastudio.popularmovie";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     public static final String PATH_MOVIE = "favorite";
     public static final class FilmEntry implements BaseColumns {
@@ -29,6 +29,8 @@ public class FilmContract {
         public static final String COLUMN_RATING = "rating";
         public static final String COLUMN_RELEASE_DATE = "date";
         public static final String COLUMN_OVERVIEW = "overview";
+        public static final String COLUMN_BACKDROP = "backdrop";
+        public static final String COLUMN_BACKDROP_PATH = "backdrop_path";
 
         public static Uri buildFavoriteMovieUriWithId(int movieId) {
             return ContentUris.withAppendedId(CONTENT_URI, movieId);

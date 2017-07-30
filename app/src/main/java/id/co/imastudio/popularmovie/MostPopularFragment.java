@@ -4,9 +4,11 @@ package id.co.imastudio.popularmovie;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -38,10 +40,12 @@ import java.util.List;
  */
 public class MostPopularFragment extends Fragment {
 
+    private static final String LIST_STATE_KEY = "statekey";
     private List<FilmModel> filmList;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Parcelable mListState;
 
     public MostPopularFragment() {
         // Required empty public constructor
@@ -58,7 +62,7 @@ public class MostPopularFragment extends Fragment {
 
         recyclerView = (RecyclerView) fragmentView.findViewById(R.id.recyclerView);
 
-        if (isNetworkConnected()){
+        if (isNetworkConnected()) {
             getDataOnline();
         } else {
             Snackbar.make(fragmentView, "No Interner Connection", Snackbar.LENGTH_LONG)
@@ -78,7 +82,7 @@ public class MostPopularFragment extends Fragment {
         final ProgressDialog loading = ProgressDialog.show(getActivity(), "Loading Data", "Mohon Bersabar", false, true, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if (isNetworkConnected()){
+                if (isNetworkConnected()) {
                     return;
                 } else {
                     new AlertDialog.Builder(getActivity())
@@ -105,7 +109,7 @@ public class MostPopularFragment extends Fragment {
                         JSONObject json = arrayresults.getJSONObject(i);
                         Log.d("Hasil Json :", "" + json);
                         FilmModel film2 = new FilmModel();
-                        film2.setIdFilm(json.getString("id"));
+                        film2.setIdFilm(json.getInt("id"));
                         film2.setGambarFilm(json.getString("poster_path"));
                         film2.setJudulFilm(json.getString("title"));
                         film2.setPosterFilm(json.getString("backdrop_path"));
@@ -115,7 +119,11 @@ public class MostPopularFragment extends Fragment {
                         filmList.add(film2);
                     }
                     adapter = new FilmAdapter(filmList, getActivity());
-                    layoutManager = new GridLayoutManager(getActivity(), 2);
+                    if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                    } else {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+                    }
 
                     recyclerView.setAdapter(adapter);
                     recyclerView.setHasFixedSize(true);
@@ -143,4 +151,19 @@ public class MostPopularFragment extends Fragment {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isConnected();
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState) {
+//        super.onSaveInstanceState(savedInstanceState);
+//
+//        // Save list state
+//        mListState = layoutManager.onSaveInstanceState();
+//    }
+//
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//
+//        mListState = savedInstanceState.getParcelable(LIST_STATE_KEY);
+//    }
 }

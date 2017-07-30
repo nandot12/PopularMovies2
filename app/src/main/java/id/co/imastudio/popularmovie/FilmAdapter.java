@@ -58,16 +58,19 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.ViewHolder> {
                 .into(holder.gambarFilm);
 
         holder.gambarFilm.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, "Judul Film : " + filmList.get(position).getJudulFilm(), Toast.LENGTH_SHORT).show();
                 Intent pindah = new Intent(context, DetailActivity.class);
                 pindah.putExtra("ID_JUDUL", filmList.get(position).getIdFilm());
                 pindah.putExtra("DATA_JUDUL", filmList.get(position).getJudulFilm());
+                pindah.putExtra("DATA_GAMBAR", filmList.get(position).getGambarFilm());
                 pindah.putExtra("DATA_POSTER", filmList.get(position).getPosterFilm());
                 pindah.putExtra("DATA_SINOPSIS", filmList.get(position).getSinopsisFilm());
                 pindah.putExtra("DATA_RATING", filmList.get(position).getRatingFilm());
                 pindah.putExtra("DATA_RELEASE", filmList.get(position).getReleaseFilm());
+//                pindah.putExtra(FilmModel.TAG_MOVIES, movies);
                 context.startActivity(pindah);
             }
         });

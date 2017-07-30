@@ -4,6 +4,7 @@ package id.co.imastudio.popularmovie;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -103,7 +104,7 @@ public class TopRatedFragment extends Fragment {
                         JSONObject json = arrayresults.getJSONObject(i);
                         Log.d("Hasil Json :", "" + json);
                         FilmModel film2 = new FilmModel();
-                        film2.setIdFilm(json.getString("id"));
+                        film2.setIdFilm(json.getInt("id"));
                         film2.setGambarFilm(json.getString("poster_path"));
                         film2.setJudulFilm(json.getString("title"));
                         film2.setPosterFilm(json.getString("backdrop_path"));
@@ -113,7 +114,11 @@ public class TopRatedFragment extends Fragment {
                         filmList.add(film2);
                     }
                     adapter = new FilmAdapter(filmList, getActivity());
-                    layoutManager = new GridLayoutManager(getActivity(), 2);
+                    if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                    } else {
+                        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+                    }
 
 
                     recyclerView.setAdapter(adapter);
