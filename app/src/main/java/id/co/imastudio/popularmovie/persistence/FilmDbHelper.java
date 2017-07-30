@@ -105,6 +105,8 @@ public class FilmDbHelper extends SQLiteOpenHelper {
 
         db.insert(FilmContract.FilmEntry.TABLE_NAME, null, values);
         db.close();
+
+//        getContentResolver().insert(FilmContract.FilmEntry.CONTENT_URI, values);
     }
 
     public void deleteFavorite(int id){

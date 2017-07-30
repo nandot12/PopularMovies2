@@ -97,11 +97,12 @@ public class DetailActivity extends AppCompatActivity {
 
         initView();
 
-//        pref = getSharedPreferences("SETTING", 0);
-//        final Boolean favorit = pref.getBoolean(FILM_FAVORIT, false);
-//        if (favorit) {
-//            btnFavorit.setChecked(true);
-//        }
+        pref = getSharedPreferences(FILM_FAVORIT, 0);
+        Boolean favorit = pref.getBoolean("Favorite"+dataidFilm, false);
+        Log.d("favorit"+dataidFilm,favorit.toString());
+        if (favorit) {
+            btnFavorit.setChecked(true);
+        }
 
         Log.d("DATA", "" + dataidFilm + datajudulFilm + dataposterFilm + datasinopsisFilm + dataratingFilm + datareleaseFilm);
         getSupportActionBar().setTitle(datajudulFilm);
@@ -124,8 +125,8 @@ public class DetailActivity extends AppCompatActivity {
                 if (checked){
                     saveFavorite();
 
-                    SharedPreferences.Editor editor = getSharedPreferences("id.co.imastudio.popularmovie.DetailActivity", MODE_PRIVATE).edit();
-                    editor.putBoolean("Favorite Added", true);
+                    SharedPreferences.Editor editor = getSharedPreferences(FILM_FAVORIT, MODE_PRIVATE).edit();
+                    editor.putBoolean("Favorite"+dataidFilm, true);
                     editor.commit();
 
                     Snackbar.make(view, "Added to Favorite",
@@ -134,8 +135,8 @@ public class DetailActivity extends AppCompatActivity {
                     filmDbHelper = new FilmDbHelper(DetailActivity.this);
                     deleteFromFavorite();
 
-                    SharedPreferences.Editor editor = getSharedPreferences("id.co.imastudio.popularmovie.DetailActivity", MODE_PRIVATE).edit();
-                    editor.putBoolean("Favorite Removed", true);
+                    SharedPreferences.Editor editor = getSharedPreferences(FILM_FAVORIT, MODE_PRIVATE).edit();
+                    editor.putBoolean("Favorite"+dataidFilm, false);
                     editor.commit();
                     Snackbar.make(view, "Removed from Favorite",
                             Snackbar.LENGTH_SHORT).show();
@@ -338,7 +339,7 @@ public class DetailActivity extends AppCompatActivity {
         try {
             filmDbHelper.addFavorite(mFilm);
         } catch (Exception e){
-            Toast.makeText(this, "Berhasil disimpan", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Gagal disimpan", Toast.LENGTH_SHORT).show();
         }
     }
 
