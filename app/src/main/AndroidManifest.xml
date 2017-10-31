@@ -41,6 +41,5 @@
             android:exported="false"
             android:syncable="true"/>
     </application>
-//ini hanya percobaan
-    //untuk dapet kaos
+
 </manifest>
