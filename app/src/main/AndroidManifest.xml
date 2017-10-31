@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     
-    //ini untuk identitas aplikasi
+   
     <application
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
@@ -41,6 +41,5 @@
             android:exported="false"
             android:syncable="true"/>
     </application>
-//ini hanya percobaan
-    //untuk dapet kaos
+
 </manifest>
