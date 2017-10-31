@@ -53,7 +53,7 @@ public class MainScreen extends AppCompatActivity {
                 .replace(R.id.content, new MostPopularFragment())
                 .commit();
     }
-
+//hallo
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
